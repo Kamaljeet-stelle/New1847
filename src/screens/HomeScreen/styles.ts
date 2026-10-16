@@ -1,0 +1,106 @@
+import { StyleSheet } from 'react-native';
+import { colors } from '../../theme/colors';
+import { typography } from '../../theme/typography';
+
+export const styles = StyleSheet.create({
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 16,
+  },
+  location: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingLeft: 6,
+    paddingRight: 12,
+    paddingVertical: 6,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: colors.line,
+    backgroundColor: colors.paper,
+  },
+  locationIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.ink,
+  },
+  locationCopy: {
+    flex: 1,
+  },
+  locationLabel: {
+    ...typography.label,
+    fontSize: 9,
+    color: colors.muted,
+  },
+  locationText: {
+    ...typography.caption,
+    fontWeight: '700',
+    color: colors.ink,
+  },
+  iconButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.line,
+    backgroundColor: colors.paper,
+  },
+  bellBadge: {
+    position: 'absolute',
+    top: -3,
+    right: -3,
+    minWidth: 20,
+    height: 20,
+    paddingHorizontal: 5,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.copper,
+    borderWidth: 2,
+    borderColor: colors.parchment,
+  },
+  bellBadgeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.white,
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.copper,
+  },
+  avatarText: {
+    color: colors.white,
+    fontWeight: '700',
+    fontSize: 15,
+  },
+  searchWrap: {
+    marginTop: -28,
+    marginHorizontal: 14,
+    borderRadius: 14,
+    backgroundColor: colors.white,
+    shadowColor: colors.ink,
+    shadowOpacity: 0.12,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 6,
+  },
+  actions: {
+    marginTop: 22,
+  },
+  gift: {
+    marginTop: 34,
+    marginBottom: 12,
+  },
+});

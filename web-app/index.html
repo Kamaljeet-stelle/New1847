@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#F6F1E8" />
+    <meta name="description" content="1847 Grooming Lounge" />
+    <title>1847 — Grooming for Men</title>
+  </head>
+  <body>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: #f6f1e8;
+      }
+
+      body {
+        font-family: Georgia, 'Times New Roman', serif;
+        -webkit-font-smoothing: antialiased;
+        overscroll-behavior: none;
+      }
+
+      #root {
+        min-height: 100%;
+        width: 100%;
+        background: #f6f1e8;
+      }
+
+      #boot-error {
+        display: none;
+        margin: 24px;
+        padding: 16px;
+        border-radius: 12px;
+        background: #8e3b32;
+        color: #fffcf8;
+        font-family: system-ui, sans-serif;
+        white-space: pre-wrap;
+      }
+    </style>
+    <div id="boot-error"></div>
+    <div id="root"></div>
+    <script>
+      window.addEventListener('error', function (event) {
+        var box = document.getElementById('boot-error');
+        if (!box) return;
+        box.style.display = 'block';
+        box.textContent = 'App error: ' + (event.message || 'unknown');
+      });
+      window.addEventListener('unhandledrejection', function (event) {
+        var box = document.getElementById('boot-error');
+        if (!box) return;
+        box.style.display = 'block';
+        box.textContent =
+          'App error: ' + String((event.reason && event.reason.message) || event.reason);
+      });
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

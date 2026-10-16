@@ -1,0 +1,39 @@
+---
+description: Production RN architecture — screens compose, hooks own logic, services own APIs
+globs: src/**/*.{ts,tsx}
+alwaysApply: true
+---
+
+# React Native quality
+
+Keep code simple, reusable, and type-safe. Preserve existing UI, APIs, navigation, permissions, and loading/error behavior.
+
+## Architecture
+
+```text
+Screen → Hooks → Services → Store → Components → Utils
+```
+
+- Screens: connect hooks, navigation, layout, and compose components. Aim for ~150–250 lines when practical.
+- Components: UI only. No API calls, Redux, or heavy filtering unless that is the component’s job.
+- Hooks: one responsibility. Do not turn a hook into a 500-line screen.
+- Services: all HTTP and visitor lookup/validation. Reuse existing helpers.
+- Derive values with `useMemo` instead of duplicating state.
+
+## Do
+
+- Search `components/`, `hooks/`, `services/`, `utils/` before adding new code.
+- `FlatList` / `SectionList` for large lists. One scrolling owner — no `ScrollView` wrapping `FlatList`.
+- `useMemo` / `useCallback` only for expensive work or stable props to memoized children.
+- Strong types; reuse existing types; avoid `any`.
+- Theme tokens and `styles.*` over repeated inline styles.
+- Named imports from `react` (`useState`, `memo`) — not `React.useState`.
+
+## Don't
+
+- Don’t rewrite working architecture for style.
+- Don’t create a hook/component used once with no clear benefit.
+- Don’t copy server data into extra local state.
+- Don’t swallow errors (`catch {}`) unless the failure is intentionally non-blocking.
+- Don’t show a full-screen loader on refresh when data is already visible.
+- Don’t disable ESLint hook deps to silence warnings.

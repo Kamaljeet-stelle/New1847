@@ -1,0 +1,56 @@
+---
+description: Screen folder structure, responsive layout, and table patterns
+globs: src/screens/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Screen structure & responsive layout
+
+When creating or updating screens under `src/screens/`, follow this structure and responsive approach.
+
+## Folder layout
+
+```
+src/screens/FeatureScreen/
+  FeatureScreen.tsx          # screen shell, navigation, selectors, composition
+  styles.ts                  # screen-level styles only
+  data.ts                    # pure helpers, filters, builders (no JSX)
+  hooks/                     # feature hooks (optional)
+  useFeatureLayout.ts        # optional; prefer shared hook below
+  components/
+    index.ts                 # public exports
+    SomeCard.tsx
+    SomeCard.styles.ts
+    SomeCard.data.ts         # heavy pure logic for that component (optional)
+```
+
+- Keep `*Screen.tsx` thin: wire state, pass props, compose components.
+- Colocate styles as `ComponentName.styles.ts`.
+- Put pure logic in `data.ts` / `*.data.ts` — no React, no styles.
+- Export public pieces from `components/index.ts`.
+
+## Responsive layout (phone / tablet / Mac)
+
+Use `useResponsiveLayout` from `src/hooks/useResponsiveLayout.ts`:
+
+- `compact` — phone; horizontal scroll for dense tables/stat strips is OK
+- `tablet` / `desktop` — stretch columns, wrap filters, 2-column card grids, larger padding
+- Apply `contentPadding` + `contentMaxWidth` on the screen `ScrollView` `contentContainerStyle`
+- Center content with `alignSelf: 'center'` + `width: '100%'` when `contentMaxWidth` is set
+
+## Tables & heatmaps
+
+- Measure available width (`onLayout` or `viewportWidth`)
+- If `available >= minWidth` → flex columns fill width (no horizontal scroll)
+- Else → fixed min widths + horizontal `ScrollView`
+- Do not hardcode phone-only fixed layouts for tablet/Mac
+
+## Do / Don't
+
+```tsx
+// ❌ BAD — giant screen file with inline StyleSheet + fixed table widths only
+// ❌ BAD — duplicate breakpoint logic per screen
+
+// ✅ GOOD — Screen composes cards; cards own styles; data.ts owns builders
+// ✅ GOOD — shared useResponsiveLayout; tables stretch when wide
+```

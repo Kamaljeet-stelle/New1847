@@ -1,0 +1,51 @@
+---
+description: Optimize RN lists and keep diffs small — FlatList, lean API wiring, less boilerplate
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Optimize & Write Less
+
+Prefer small, focused edits. Reuse existing services, styles, and components. Do not rewrite working screens.
+
+## Lists — FlatList first
+
+Never use `.map()` for scrollable or table/list rows when `FlatList` fits.
+
+```tsx
+// ❌ BAD
+{items.map(item => <Row key={item.id} item={item} />)}
+
+// ✅ GOOD
+<FlatList
+  data={items}
+  keyExtractor={item => item.id}
+  renderItem={renderItem}
+  ListHeaderComponent={header}
+  ListEmptyComponent={<Text>No items found.</Text>}
+  initialNumToRender={10}
+  windowSize={5}
+/>
+```
+
+- Memoize `renderItem` / headers with `useCallback` / `useMemo`.
+- Nested lists: `nestedScrollEnabled`, parent `scrollEnabled={false}` when needed.
+- Always include `ListEmptyComponent` for empty data.
+
+## API actions — lean wiring
+
+- Put HTTP in `src/services/*`. Screen/handler: call service → update store only on success → surface the error on failure.
+- Do not invent local-only delete/assign if an API exists.
+- Drive UI from API flags instead of guessing from names/roles.
+
+## Forms & pickers
+
+- Field errors under each input + red border; clear on change.
+- Searchable pickers: search input + `FlatList` + selected checkmark row.
+- Include an empty option when selection is optional.
+
+## Don't
+
+- Don't add verbose comments, unused props, or parallel abstractions.
+- Don't expand scope beyond the requested change.
+- Don't replace working UI chrome unless asked.
